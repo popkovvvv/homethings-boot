@@ -1,7 +1,6 @@
 package com.homethings.homethingsboot.controllers;
 
 import com.homethings.homethingsboot.models.*;
-import com.homethings.homethingsboot.models.pojo.HomePojo;
 import com.homethings.homethingsboot.repository.*;
 import com.homethings.homethingsboot.service.HomeService;
 import com.homethings.homethingsboot.validation.CreateHomeFormBean;
