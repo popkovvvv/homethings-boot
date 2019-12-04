@@ -6,9 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class HomethingsBootApplication {
-
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		SpringApplication.run(HomethingsBootApplication.class, args);
 	}
-
 }

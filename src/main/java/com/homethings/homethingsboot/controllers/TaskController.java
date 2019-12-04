@@ -84,7 +84,7 @@ public class TaskController {
             homeDAO.save(home);
             taskDao.delete(task);
             return new ResponseEntity<>(
-                    "Task deleted",
+                    "Task " +task.getId()+ " deleted",
                     HttpStatus.OK);
         } catch (Exception entity) {
             return new ResponseEntity<>(
@@ -111,7 +111,7 @@ public class TaskController {
         try {
             taskDao.save(task);
             return new ResponseEntity<>(
-                    "Task updated",
+                    "Task " +task.getId()+ " updated",
                     HttpStatus.OK);
         } catch (Exception entity) {
             return new ResponseEntity<>(

@@ -2,7 +2,6 @@ package com.homethings.homethingsboot.controllers;
 
 import com.homethings.homethingsboot.models.*;
 import com.homethings.homethingsboot.repository.*;
-import com.homethings.homethingsboot.service.HomeService;
 import com.homethings.homethingsboot.validation.CreateHomeFormBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,19 +45,18 @@ public class HomeController {
 
         long accountId = (long) session.getAttribute("userId");
         User user = userDao.findById(accountId);
+        Home home;
         try {
-            Home home = homeDAO.findByTitle(title);
-            if (!home.getUsers().contains(user)){
-                home.getUsers().add(user);
-                homeDAO.save(home);
-            }
-            session.setAttribute("homeId", home.getId());
-            return new ResponseEntity<>("you in!", HttpStatus.OK);
+            home = homeDAO.findByTitle(title);
         } catch (NoResultException notFound) {
             return new ResponseEntity<>(
                     "create Home!",
                     HttpStatus.BAD_REQUEST);
         }
+        user.setHome(home);
+        userDao.save(user);
+        session.setAttribute("homeId", home.getId());
+        return new ResponseEntity<>("you in!", HttpStatus.OK);
     }
 
     @PostMapping(path = "/home/create")
@@ -81,6 +79,7 @@ public class HomeController {
 
         try {
             userDao.save(user);
+            session.setAttribute("homeId", home.getId());
             return new ResponseEntity<>("Home created", HttpStatus.OK);
         } catch (NoResultException notFound) {
             return new ResponseEntity<>(
@@ -104,7 +103,6 @@ public class HomeController {
     @GetMapping(path = "/home")
     public Home getHome(HttpSession session) {
         long homeId = (long) session.getAttribute("homeId");
-        HomeService homeService = new HomeService();
         return homeDAO.findById(homeId);
     }
 

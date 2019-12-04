@@ -1,6 +1,8 @@
 package com.homethings.homethingsboot.controllers;
 
+import com.homethings.homethingsboot.models.Profile;
 import com.homethings.homethingsboot.models.User;
+import com.homethings.homethingsboot.repository.ProfileRepository;
 import com.homethings.homethingsboot.repository.UserRepository;
 import com.homethings.homethingsboot.validation.LoginFormBean;
 import com.homethings.homethingsboot.validation.RegistrationFormBean;
@@ -22,6 +24,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userDAO;
+
+    @Autowired
+    private ProfileRepository profileRepository;
 
     @PostMapping(path = "/login")
     public ResponseEntity processLogin(
@@ -54,8 +59,10 @@ public class UserController {
         }
 
         User user = new User(form.getEmail(), form.getPassword());
-
+        Profile profile = new Profile();
+        profile.setUser(user);
         try {
+            profileRepository.save(profile);
             userDAO.save(user);
             session.setAttribute("userId",user.getId());
             return new ResponseEntity<>("OK", HttpStatus.OK);
