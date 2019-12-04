@@ -1,12 +1,16 @@
 package com.homethings.homethingsboot.controllers;
 
+import com.hazelcast.core.HazelcastInstance;
 import com.homethings.homethingsboot.models.Profile;
 import com.homethings.homethingsboot.models.User;
 import com.homethings.homethingsboot.repository.ProfileRepository;
 import com.homethings.homethingsboot.repository.UserRepository;
 import com.homethings.homethingsboot.validation.LoginFormBean;
 import com.homethings.homethingsboot.validation.RegistrationFormBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -28,12 +34,25 @@ public class UserController {
     @Autowired
     private ProfileRepository profileRepository;
 
+    private final Logger logger =  LoggerFactory.getLogger(UserController.class);
+    private final HazelcastInstance hazelcastInstance;
+
+    @Autowired
+    public UserController(@Qualifier("hazelcastInstance") HazelcastInstance hazelcastInstance) {
+        this.hazelcastInstance = hazelcastInstance;
+    }
+
     @PostMapping(path = "/login")
     public ResponseEntity processLogin(
             HttpSession session,
             @ModelAttribute("formLogin") LoginFormBean form, BindingResult result) {
         try {
             User found = userDAO.findByEmailAndPassword(form.getEmail(), form.getPassword());
+
+            List<Long> hazelcastMap = hazelcastInstance.getList("user");
+            hazelcastMap.add(found.getId());
+            System.out.println(hazelcastMap.get(0));
+
             session.setAttribute("userId", found.getId());
             return new ResponseEntity<>("OK", HttpStatus.OK);
         } catch (NoResultException notFound) {
