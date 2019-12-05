@@ -35,7 +35,6 @@ public class Account {
     @Column(name = "created_at")
     private Date date;
 
-
     @OneToOne
     private Profile profile;
 

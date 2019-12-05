@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ProfileRepository extends PagingAndSortingRepository<Profile, Long> {
 
-    Profile findByUser(Account account);
+    Profile findByAccount(Account account);
 
     List<Profile> findAllByName(String name);
 

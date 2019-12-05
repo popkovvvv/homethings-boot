@@ -21,6 +21,6 @@ public class UserProfileController {
     @GetMapping(path = "/profile/get")
     public Profile getProfileByUser(HttpSession session){
         Account account = userRepository.findById((long) session.getAttribute("userId"));
-        return profileRepository.findByUser(account);
+        return profileRepository.findByAccount(account);
     }
 }
