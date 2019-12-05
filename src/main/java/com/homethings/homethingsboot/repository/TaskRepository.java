@@ -1,7 +1,7 @@
 package com.homethings.homethingsboot.repository;
 
 import com.homethings.homethingsboot.models.Task;
-import com.homethings.homethingsboot.models.User;
+import com.homethings.homethingsboot.models.Account;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,9 +14,9 @@ public interface TaskRepository extends PagingAndSortingRepository<Task, Long> {
 
     Task findTaskByTitleIsLike(String title);
 
-    Task findBySender(User user);
+    Task findBySender(Account account);
 
-    Task findBySenderOrPerformed(User sender, User performed);
+    Task findBySenderOrPerformed(Account sender, Account performed);
 
     List<Task> getAllByHomeId(long homeId);
 

@@ -20,13 +20,13 @@ public class Note {
     private String text;
 
     @ManyToOne(optional = false)
-    private User author;
+    private Account author;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private Home home;
 
-    public Note(String title, String text, User author, Date date) {
+    public Note(String title, String text, Account author, Date date) {
         this.title = title;
         this.text = text;
         this.author = author;
@@ -57,11 +57,11 @@ public class Note {
         this.text = text;
     }
 
-    public User getAuthor() {
+    public Account getAuthor() {
         return author;
     }
 
-    public void setAuthor(User provider) {
+    public void setAuthor(Account provider) {
         this.author = provider;
     }
 

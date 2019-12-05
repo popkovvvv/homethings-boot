@@ -1,7 +1,7 @@
 package com.homethings.homethingsboot.controllers;
 
 import com.homethings.homethingsboot.models.Profile;
-import com.homethings.homethingsboot.models.User;
+import com.homethings.homethingsboot.models.Account;
 import com.homethings.homethingsboot.repository.ProfileRepository;
 import com.homethings.homethingsboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class UserProfileController {
 
     @GetMapping(path = "/profile/get")
     public Profile getProfileByUser(HttpSession session){
-        User user = userRepository.findById((long) session.getAttribute("userId"));
-        return profileRepository.findByUser(user);
+        Account account = userRepository.findById((long) session.getAttribute("userId"));
+        return profileRepository.findByUser(account);
     }
 }

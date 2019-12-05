@@ -19,16 +19,16 @@ public class Profile {
     @Column()
     private Date birthday;
 
-    public User getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @OneToOne(mappedBy = "profile")
-    private User user;
+    private Account account;
 
     public Profile(){}
 

@@ -1,7 +1,5 @@
 package com.homethings.homethingsboot.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +17,7 @@ public class Home {
     private String title;
 
     @OneToMany(mappedBy = "home", fetch = FetchType.EAGER)
-    private List<User> users = new ArrayList<>();
+    private List<Account> accounts = new ArrayList<>();
 
     @OneToMany(mappedBy = "home")
     private List<Task> taskList = new ArrayList<>();
@@ -31,13 +29,13 @@ public class Home {
     private List<Note> noteList = new ArrayList<>();
 
     @ManyToOne
-    private User creator;
+    private Account creator;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date date;
 
-    public Home(String title, User creator, Date date) {
+    public Home(String title, Account creator, Date date) {
         this.title = title;
         this.creator = creator;
         this.date = date;
@@ -61,19 +59,19 @@ public class Home {
         this.title = name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
-    public User getCreator() {
+    public Account getCreator() {
         return creator;
     }
 
-    public void setCreator(User creator) {
+    public void setCreator(Account creator) {
         this.creator = creator;
     }
 

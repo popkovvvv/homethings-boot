@@ -20,10 +20,10 @@ public class Task {
     private boolean checked;
 
     @ManyToOne(optional = false)
-    private User sender;
+    private Account sender;
 
     @ManyToOne(optional = false)
-    private User performed;
+    private Account performed;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
@@ -36,7 +36,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(String title, User sender, User performed) {
+    public Task(String title, Account sender, Account performed) {
         this.title = title;
         this.sender = sender;
         this.performed = performed;
@@ -62,7 +62,7 @@ public class Task {
         this.title = title;
     }
 
-    public void setSender(User provider) {
+    public void setSender(Account provider) {
         this.sender = provider;
     }
 
@@ -74,7 +74,7 @@ public class Task {
         return title;
     }
 
-    public User getSender() {
+    public Account getSender() {
         return sender;
     }
 
@@ -86,11 +86,11 @@ public class Task {
         this.date = date;
     }
 
-    public User getPerformed() {
+    public Account getPerformed() {
         return performed;
     }
 
-    public void setPerformed(User performed) {
+    public void setPerformed(Account performed) {
         this.performed = performed;
     }
 

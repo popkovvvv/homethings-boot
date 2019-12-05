@@ -1,24 +1,23 @@
 package com.homethings.homethingsboot.repository;
 
-import com.homethings.homethingsboot.models.Home;
-import com.homethings.homethingsboot.models.User;
+import com.homethings.homethingsboot.models.Account;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface UserRepository extends PagingAndSortingRepository<User, Long> {
+public interface UserRepository extends PagingAndSortingRepository<Account, Long> {
 
-    User findById(long id);
+    Account findById(long id);
 
-    User findByEmail(String email);
+    Account findByEmail(String email);
 
-    User findByRole(User.AccessRole role);
+    Account findByRole(Account.AccessRole role);
 
-    User findByEmailAndPassword(String email, String password);
+    Account findByEmailAndPassword(String email, String password);
 
-    List<User> getAllByHomeId(long homeId);
+    List<Account> getAllByHomeId(long homeId);
 
 
 

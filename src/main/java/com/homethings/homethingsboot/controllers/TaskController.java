@@ -1,8 +1,8 @@
 package com.homethings.homethingsboot.controllers;
 
+import com.homethings.homethingsboot.models.Account;
 import com.homethings.homethingsboot.models.Home;
 import com.homethings.homethingsboot.models.Task;
-import com.homethings.homethingsboot.models.User;
 import com.homethings.homethingsboot.repository.HomeRepository;
 import com.homethings.homethingsboot.repository.TaskRepository;
 import com.homethings.homethingsboot.repository.UserRepository;
@@ -57,8 +57,8 @@ public class TaskController {
         long homeId = (long) session.getAttribute("homeId");
         long userId = (long) session.getAttribute("userId");
 
-        User provider = userDao.findById(userId);
-        User performed = userDao.findById(form.getPerformed());
+        Account provider = userDao.findById(userId);
+        Account performed = userDao.findById(form.getPerformed());
         Home home = homeDAO.findById(homeId);
 
         Task task = new Task(form.getTitle(),provider,performed);
@@ -101,7 +101,7 @@ public class TaskController {
 
         long id = Long.parseLong(taskId);
         Task task = taskDao.findById(id);
-        User performed = userDao.findById(formEdit.getPerformed());
+        Account performed = userDao.findById(formEdit.getPerformed());
 
         task.setTitle(formEdit.getTitle());
         task.setChecked(formEdit.isChecked());

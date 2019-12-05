@@ -17,7 +17,7 @@ public class Payment {
     private double amount;
 
     @ManyToOne(optional = false)
-    private User sender;
+    private Account sender;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
@@ -27,7 +27,7 @@ public class Payment {
     @Column(name = "created_at")
     private Date date;
 
-    public Payment(double amount, User sender, Date date) {
+    public Payment(double amount, Account sender, Date date) {
         this.amount = amount;
         this.sender = sender;
         this.date = date;
@@ -53,11 +53,11 @@ public class Payment {
     }
 
 
-    public User getSender() {
+    public Account getSender() {
         return sender;
     }
 
-    public void setSender(User performed) {
+    public void setSender(Account performed) {
         this.sender = performed;
     }
 

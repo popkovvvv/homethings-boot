@@ -44,7 +44,7 @@ public class HomeController {
             @RequestParam String title) {
 
         long accountId = (long) session.getAttribute("userId");
-        User user = userDao.findById(accountId);
+        Account account = userDao.findById(accountId);
         Home home;
         try {
             home = homeDAO.findByTitle(title);
@@ -53,8 +53,8 @@ public class HomeController {
                     "create Home!",
                     HttpStatus.BAD_REQUEST);
         }
-        user.setHome(home);
-        userDao.save(user);
+        account.setHome(home);
+        userDao.save(account);
         session.setAttribute("homeId", home.getId());
         return new ResponseEntity<>("you in!", HttpStatus.OK);
     }
@@ -66,19 +66,19 @@ public class HomeController {
             @ModelAttribute("createHomeForm") CreateHomeFormBean form,
             BindingResult result) {
 
-        User user = userDao.findById((long) session.getAttribute("userId"));
-        user.setRole(User.AccessRole.ADMIN);
+        Account account = userDao.findById((long) session.getAttribute("userId"));
+        account.setRole(Account.AccessRole.ADMIN);
         if (result.hasErrors()){
             return new ResponseEntity<>(
                     result,
                     HttpStatus.BAD_REQUEST);
         }
-        Home home = new Home(form.getTitle(),user, new Date());
-        user.setHome(home);
-        userDao.save(user);
+        Home home = new Home(form.getTitle(), account, new Date());
+        account.setHome(home);
+        userDao.save(account);
 
         try {
-            userDao.save(user);
+            userDao.save(account);
             session.setAttribute("homeId", home.getId());
             return new ResponseEntity<>("Home created", HttpStatus.OK);
         } catch (NoResultException notFound) {
@@ -107,7 +107,7 @@ public class HomeController {
     }
 
     @GetMapping(path = "/home/user/all")
-    public List<User> userList(HttpSession session) {
+    public List<Account> userList(HttpSession session) {
         long homeId = (long) session.getAttribute("homeId");
         return userDao.getAllByHomeId(homeId);
     }

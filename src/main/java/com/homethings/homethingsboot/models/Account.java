@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class Account {
 
     @Id
     @GeneratedValue
@@ -41,10 +41,10 @@ public class User {
 
     public enum AccessRole {ADMIN,USER}
 
-    public User() {
+    public Account() {
     }
 
-    public User(String email, String password) {
+    public Account(String email, String password) {
         this.email = email;
         this.password = password;
     }
