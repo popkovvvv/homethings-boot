@@ -17,7 +17,7 @@ public class Account {
     @Column(length = 32, unique = true)
     private String login;
 
-    @Column(length = 32, nullable = false)
+    @Column(length = 64, nullable = false)
     private String password;
 
     @Column()
@@ -43,9 +43,10 @@ public class Account {
     public Account() {
     }
 
-    public Account(String email, String password) {
-        this.email = email;
+    public Account(String login, String password,String email) {
+        this.login = login;
         this.password = password;
+        this.email = email;
     }
 
     public void setHome(Home home) {

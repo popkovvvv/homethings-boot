@@ -3,6 +3,7 @@ package com.homethings.homethingsboot.service;
 import com.homethings.homethingsboot.models.Account;
 import com.homethings.homethingsboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -20,7 +21,7 @@ public class UserRolesService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Account found = userRepository.findByEmail(login);
+        Account found = userRepository.findByLogin(login);
         if (found == null) {
             throw new UsernameNotFoundException("Account " + login + " not found.");
         }
@@ -31,7 +32,6 @@ public class UserRolesService implements UserDetailsService {
         if (found.getRole().equals(Account.AccessRole.ADMIN)) {
             roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
-
         return new User(login, found.getPassword(), roles);
     }
 }

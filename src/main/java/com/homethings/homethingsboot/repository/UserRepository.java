@@ -13,6 +13,8 @@ public interface UserRepository extends PagingAndSortingRepository<Account, Long
 
     Account findByEmail(String email);
 
+    Account findByLogin(String login);
+
     Account findByRole(Account.AccessRole role);
 
     Account findByEmailAndPassword(String email, String password);

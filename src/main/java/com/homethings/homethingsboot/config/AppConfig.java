@@ -16,7 +16,7 @@ public class AppConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
-        bean.setPersistenceUnitName("TestPersistenceUnit");
+        bean.setPersistenceUnitName("ProdPersistenceUnit");
         return bean;
     }
 }

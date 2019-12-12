@@ -17,13 +17,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().permitAll();
-//
-//        http.formLogin()
-//                .loginPage("/login")
-//                .usernameParameter("login")
-//                .passwordParameter("password")
-//                .loginProcessingUrl("/login");
+                .antMatchers("/","/login","/registration").permitAll()
+                .antMatchers("/home/**").hasRole("USER")
+                .anyRequest().denyAll();
+        http.csrf().disable();
+
     }
 
     @Bean

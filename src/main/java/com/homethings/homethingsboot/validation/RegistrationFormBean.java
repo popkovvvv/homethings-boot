@@ -12,6 +12,9 @@ public class RegistrationFormBean {
     @Size(min = 4, max = 32, message = "Password length ...")
     private String passwordConfirmation;
 
+    @Size(min = 4, max = 32, message = "Login length ...")
+    private String login;
+
     public String getEmail() {
         return email;
     }
@@ -34,5 +37,13 @@ public class RegistrationFormBean {
 
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 }
