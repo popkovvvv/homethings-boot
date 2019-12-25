@@ -1,9 +1,8 @@
-package com.homethings.homethingsboot.service;
+package com.homethings.homethingsboot.config.security;
 
 import com.homethings.homethingsboot.models.Account;
 import com.homethings.homethingsboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -11,11 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 
 @Component
 public class UserRolesService implements UserDetailsService {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -29,9 +28,9 @@ public class UserRolesService implements UserDetailsService {
         ArrayList<GrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-        if (found.getRole().equals(Account.AccessRole.ADMIN)) {
-            roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
+//        if (found.getRole() == Account.AccessRole.ADMIN) {
+//            roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+//        }
         return new User(login, found.getPassword(), roles);
     }
 }

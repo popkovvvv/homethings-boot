@@ -6,6 +6,7 @@ import com.homethings.homethingsboot.validation.CreateHomeFormBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,11 +41,11 @@ public class HomeController {
 
     @PostMapping(path = "/home/login")
     public ResponseEntity processLogin(
+            UserDetails userDetails,
             HttpSession session,
             @RequestParam String title) {
 
-        long accountId = (long) session.getAttribute("userId");
-        Account account = userDao.findById(accountId);
+        Account account = userDao.findByLogin(userDetails.getUsername());
         Home home;
         try {
             home = homeDAO.findByTitle(title);
@@ -62,11 +63,12 @@ public class HomeController {
     @PostMapping(path = "/home/create")
     @Transactional
     public ResponseEntity createHome(
+            UserDetails userDetails,
             HttpSession session,
             @ModelAttribute("createHomeForm") CreateHomeFormBean form,
             BindingResult result) {
 
-        Account account = userDao.findById((long) session.getAttribute("userId"));
+        Account account = userDao.findByLogin(userDetails.getUsername());
         account.setRole(Account.AccessRole.ADMIN);
         if (result.hasErrors()){
             return new ResponseEntity<>(

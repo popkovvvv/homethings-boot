@@ -1,6 +1,5 @@
 package com.homethings.homethingsboot.config.security;
 
-import com.homethings.homethingsboot.service.UserRolesService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -22,6 +21,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().denyAll();
         http.csrf().disable();
 
+        http.formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/home/login")
+                .usernameParameter("login")
+                .passwordParameter("password")
+               .loginProcessingUrl("/login");
+
+        http.logout()
+                .logoutUrl("/logout");
     }
 
     @Bean

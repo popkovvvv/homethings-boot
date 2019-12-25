@@ -1,12 +1,11 @@
 package com.homethings.homethingsboot.controllers;
 
 import com.hazelcast.core.HazelcastInstance;
+import com.homethings.homethingsboot.config.security.UserRolesService;
 import com.homethings.homethingsboot.models.Account;
 import com.homethings.homethingsboot.models.Profile;
 import com.homethings.homethingsboot.repository.ProfileRepository;
 import com.homethings.homethingsboot.repository.UserRepository;
-import com.homethings.homethingsboot.service.UserRolesService;
-import com.homethings.homethingsboot.validation.LoginFormBean;
 import com.homethings.homethingsboot.validation.RegistrationFormBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -55,20 +50,20 @@ public class UserController {
         this.hazelcastInstance = hazelcastInstance;
     }
 
-    @PostMapping(path = "/login")
-    public ResponseEntity processLogin(
-            HttpSession session,
-            @ModelAttribute("formLogin") LoginFormBean form) {
-
-        Account found = userDAO.findByEmail(form.getLogin());
-        if (found == null || !encoder.matches(form.getPassword(), found.getPassword())) {
-            return new ResponseEntity<>(
-                    "NO",
-                    HttpStatus.UNAUTHORIZED);
-        }
-
-        return new ResponseEntity<>("OK", HttpStatus.ACCEPTED);
-    }
+//    @PostMapping(path = "/login")
+//    public ResponseEntity processLogin(
+//            HttpSession session,
+//            @ModelAttribute("formLogin") LoginFormBean form) {
+//
+//        Account found = userDAO.findByEmail(form.getLogin());
+//        if (found == null || !encoder.matches(form.getPassword(), found.getPassword())) {
+//            return new ResponseEntity<>(
+//                    "NO",
+//                    HttpStatus.UNAUTHORIZED);
+//        }
+//
+//        return new ResponseEntity<>("OK", HttpStatus.ACCEPTED);
+//    }
 
 
     @PostMapping(path = "/registration")
@@ -104,17 +99,18 @@ public class UserController {
 
     }
 
-    @GetMapping(path = "/logout")
-    @Transactional
-    public ResponseEntity processLogout(HttpSession session) {
-        try {
-            session.removeAttribute("userId");
-            return new ResponseEntity<>("OK", HttpStatus.OK);
-        } catch (NoResultException notFound) {
-            return new ResponseEntity<>(
-                    "NO",
-                    HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @GetMapping(path = "/logout")
+//    @Transactional
+//    public ResponseEntity processLogout(HttpSession session, UserDetails userDetails) {
+//        try {
+//            session.removeAttribute("userId");
+//
+//            return new ResponseEntity<>("OK", HttpStatus.OK);
+//        } catch (NoResultException notFound) {
+//            return new ResponseEntity<>(
+//                    "NO",
+//                    HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 }
